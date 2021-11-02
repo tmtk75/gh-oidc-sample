@@ -1,6 +1,7 @@
 # README
 A sample for https://github.blog/changelog/2021-10-27-github-actions-secure-cloud-deployments-with-openid-connect/
-Call `get-caller-identity` of AWS in GitHub Actions using OIDC provider.
+
+Call `get-caller-identity` of AWS in GitHub Actions using OIDC provider, then the exit code is 0.
 
 # Getting Started
 ```
