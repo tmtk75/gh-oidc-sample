@@ -48,5 +48,18 @@ resource "aws_iam_openid_connect_provider" "github" {
   client_id_list = [
     "https://github.com/tmtk75",
   ]
-  thumbprint_list = ["a031c46782e6e6c662c2c87c76da9aa62ccabd8e"]
+  thumbprint_list = [data.tls_certificate.github_actions.certificates[0].sha1_fingerprint]
 }
+
+#
+# GitHub open id connect fingerprint
+# ref: https://zenn.dev/yukin01/articles/github-actions-oidc-provider-terraform
+#
+data "http" "github_actions_openid_configuration" {
+  url = "https://token.actions.githubusercontent.com/.well-known/openid-configuration"
+}
+
+data "tls_certificate" "github_actions" {
+  url = jsondecode(data.http.github_actions_openid_configuration.body).jwks_uri
+}
+
